@@ -34,6 +34,7 @@ class NumberBox extends React.Component {
     // the function MUST be an arrow function
     increment = () => {
         // we HAVE to use setState to change a key inside the state
+        // setState is ASYNC
         this.setState({
             'count': this.state.count + 1
         })

@@ -5,7 +5,6 @@ import ImageFrame from './ImageFrame';
 import "./App.css";
 
 
-
 function Alert(props) {
   return (
     <div
