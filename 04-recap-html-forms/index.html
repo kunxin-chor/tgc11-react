@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <label>Enter your first name</label>
+        <input type="text" name="firstname" class="firstname"/>
+        <button id="btn-submit">Submit</button>
+    </div>
+    <script>
+        document.querySelector('#btn-submit').addEventListener('click', ()=>{
+            // is imperative!
+            let fname = document.querySelector('.firstname').value;
+        });
+    </script>
+
+
+</body>
+</html>
