@@ -69,7 +69,7 @@ export default class SurveyForm extends React.Component {
             </div>
           </div>
           {/* end radio buttons */}
-             <div>
+          <div>
             <label className="form-label">How you know about us</label>
             <div className="form-check">
               <input
@@ -121,5 +121,65 @@ export default class SurveyForm extends React.Component {
     this.setState({
       rating: event.target.value
     });
+  };
+  updateKnowAbout = event => {
+    // BEGINNER WAY BUT NOT ENCOURAGED
+    // BECAUSE THIS DOES NOT RESPECT IMMUTABILITY
+    //   let knowAbout = this.state.knowAbout;
+    //   knowAbout.push(event.target.value);
+    //   this.setState({
+    //       'knowAbout': knowAbout
+    //   })
+
+    // search terms: immutable way to mutate an array
+    // how to add to an array in an immutabe way
+    // 1. make a clone of the original array
+    // 2. add to the clone
+    // 3. set the clone back into the state
+
+    /*
+    // METHOD 1: Using traditional
+    // 1. make a clone of the original array
+    let clone = this.state.knowAbout.slice();
+    // 2. add to the clone
+    clone.push(event.target.value)
+    // 3. set the clone back into the state
+    this.setState({
+        'knowAbout': clone
+    })
+    */
+
+    // METHOD 3: ALL IN ONE SHORT FORM
+    // this.setState({
+    //     'knowAbout': [...this.state.knowAbout, event.target.value]
+    // })
+
+    // check if the checkbox is already checked
+    if (this.state.knowAbout.includes(event.target.value) === false) {
+      // METHOD 2: Using ES6
+      // 1.make a clone of the array
+      let clone = [...this.state.knowAbout];
+      // 2. add to the clone
+      clone.push(event.target.value);
+      // 3. set state
+      this.setState({
+        knowAbout: clone
+      });
+    } else {
+        // the checkbox is already checked, so we should remove the string from the array
+
+        // 1. clone the array
+        let clone = this.state.knowAbout.slice();
+
+        // 2. remove the item from the cloned array
+        let filtered = clone.filter(function(item){
+            return item !== event.target.value
+        })
+
+        // 3. we set the cloned array back to the state
+        this.setState({
+            'knowAbout': filtered
+        })
+    }
   };
 }
