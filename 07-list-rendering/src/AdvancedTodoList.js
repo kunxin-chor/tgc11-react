@@ -26,7 +26,7 @@ export default class AdvancedTodoList extends React.Component {
         // declare an empty array
         let tasks = [];
         for (let eachTask of this.state.tasks) {
-            tasks.push(<li>
+            tasks.push(<li key={eachTask.id}>
                     {eachTask.title} ({eachTask.id})
                     <input type="checkbox" checked={eachTask.done}/>
                 </li>)
