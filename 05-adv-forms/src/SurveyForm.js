@@ -99,7 +99,7 @@ export default class SurveyForm extends React.Component {
                 type="checkbox"
                 value="word-of-mouth"
                 onChange={this.updateKnowAbout}
-                name="rating"
+                name="knowAbout"
               />
               <label className="form-check-label" for="defaultCheck1">
                 Word of mouth
