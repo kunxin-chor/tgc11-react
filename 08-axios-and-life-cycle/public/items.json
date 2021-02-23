@@ -1,0 +1,19 @@
+{
+  "tasks": [
+    {
+      "id": 1234,
+      "title": "Clean the room",
+      "done": false
+    },
+    {
+      "id": 1235,
+      "title": "Wash the car",
+      "done": false
+    },
+    {
+      "id": 1236,
+      "title": "Wash the toilet",
+      "done": true
+    }
+  ]
+}
