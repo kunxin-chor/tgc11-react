@@ -11,8 +11,9 @@ export default class SurveyForm extends React.Component {
     email: "",
     rating: 3,
     country: "",
-    knowAbout: [] // 'cos we can select multiple values with a checkbox
+    knowAbout: [], // 'cos we can select multiple values with a checkbox
     // so the default for knowAbout will be an array
+    keepInTouch: [] // emails, SMS, whatsapp, fb etc.
   };
   render() {
     return (
@@ -107,6 +108,35 @@ export default class SurveyForm extends React.Component {
             </div>
           </div>
           {/* end checkboxes */}
+          <div>
+            <label className="form-label">Country</label>
+            <select
+              className="form-control"
+              name="country"
+              value={this.state.country}
+              onChange={this.updateCountry}
+            >
+              <option>Singapore</option>
+              <option>Malaysia</option>
+              <option>Indonesia</option>
+            </select>
+          </div>
+          <div>
+            <label className="form-label">How do keep in touch</label>
+            <select 
+              className="form-control"
+              name="keepInTouch"
+              onChange={this.updateKeepInTouch}
+              value={this.state.keepInTouch}
+              multiple
+              
+            >
+              <option>Email</option>
+              <option>SMS</option>
+              <option>Whatsapp</option>
+              <option>Mail Catalog</option>
+            </select>
+          </div>
         </div>
       </React.Fragment>
     );
@@ -166,20 +196,54 @@ export default class SurveyForm extends React.Component {
         knowAbout: clone
       });
     } else {
-        // the checkbox is already checked, so we should remove the string from the array
+      // the checkbox is already checked, so we should remove the string from the array
 
-        // 1. clone the array
-        let clone = this.state.knowAbout.slice();
+      // // 1. clone the array
+      // let clone = this.state.knowAbout.slice();
 
-        // 2. remove the item from the cloned array
-        let filtered = clone.filter(function(item){
-            return item !== event.target.value
-        })
+      // // 2. remove the item from the cloned array
+      // let filtered = clone.filter(function(item){
+      //     return item !== event.target.value
+      // })
 
-        // 3. we set the cloned array back to the state
-        this.setState({
-            'knowAbout': filtered
-        })
+      // // 3. we set the cloned array back to the state
+      // this.setState({
+      //     'knowAbout': filtered
+      // })
+
+      let clone = [...this.state.knowAbout];
+      clone = clone.filter(item => item !== event.target.value);
+      this.setState({
+        knowAbout: clone
+      });
+
+      // this.setState({
+      //     'knowAbout': [...this.state.knowAbout].filter(item=>item!==event.target.value)
+      // })
     }
+  }; // end updateKnowAbout
+
+  updateCountry = event => {
+    this.setState({
+      country: event.target.value
+    });
+  };
+
+  updateKeepInTouch = event => {
+    let selectedOptions = event.target.selectedOptions;
+    console.log(selectedOptions);
+    //   let options = Array.from(selectedOptions, function(option) {
+    //       return option.value;
+    //   })
+    //console.log(options)
+
+    let optionsInText = [];
+    for (let option of selectedOptions) {
+      optionsInText.push(option.value);
+    }
+
+    this.setState({
+        'keepInTouch':optionsInText
+    })
   };
 }
