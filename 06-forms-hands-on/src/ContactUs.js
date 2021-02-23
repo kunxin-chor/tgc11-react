@@ -145,11 +145,6 @@ export default class ContactUs extends React.Component {
   }
 
   canSubmit = () => {
-      console.log( this.state.firstName.length,
-      this.state.lastName.length,
-      this.state.enquiry.length ,
-      this.state.country.length ,
-      this.state.followUp.length)
     return (
       this.state.firstName.length > 0 && // check if the first name is filled in
       this.state.lastName.length > 0 && // check if the last name is filled in
