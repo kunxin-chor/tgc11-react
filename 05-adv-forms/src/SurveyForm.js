@@ -129,7 +129,6 @@ export default class SurveyForm extends React.Component {
               onChange={this.updateKeepInTouch}
               value={this.state.keepInTouch}
               multiple
-              
             >
               <option>Email</option>
               <option>SMS</option>
