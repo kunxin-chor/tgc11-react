@@ -9,7 +9,10 @@ export default class TodoList extends React.Component {
         done: true
       }
     ],
-    newTaskTitle: ""
+    newTaskTitle: "",
+    editedTaskTitle: "",
+    editedTaskDone: false,
+    editingTask: false
   };
   renderTaskList = () => {
     let accum = [];
@@ -21,17 +24,59 @@ export default class TodoList extends React.Component {
             type="checkbox"
             checked={t.done}
             onChange={() => {
-              this.updateCheckbox(t);
+              this.updateTaskCheckbox(t);
             }}
           />
-          <button onClick={()=>{
+          <button
+            onClick={() => {
+              this.editTask(t);
+            }}
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => {
               this.deleteTask(t);
-          }}>Delete</button>
+            }}
+          >
+            Delete
+          </button>
         </div>
       );
     }
     return accum;
   };
+
+  editTask = task => {
+    this.setState({
+      editingTask: true,
+      editedTaskTitle: task.title,
+      editedTaskDone: task.done,
+      editedTaskID: task.id
+    });
+  };
+
+  updateTask = (event) => {
+
+      let newTask = {
+          'id': this.state.editedTaskID,
+          'title': this.state.editedTaskTitle,
+          'done': this.state.editedTaskDone
+      }
+      let clonedArray = this.state.tasks.map(function(eachTask){
+          if (eachTask.id != newTask.id) {
+              return eachTask;
+          } else {
+              return newTask;
+          }
+      })
+
+      this.setState({
+          'tasks': clonedArray
+      })
+
+
+  }
 
   updateTaskTitle = event => {
     this.setState({
@@ -39,24 +84,23 @@ export default class TodoList extends React.Component {
     });
   };
 
-  deleteTask = (taskToDelete) => {
-      // 1. find the index of the task we want to delete
-      let index = this.state.tasks.findIndex( t => t.id === taskToDelete.id);
+  deleteTask = taskToDelete => {
+    // 1. find the index of the task we want to delete
+    let index = this.state.tasks.findIndex(t => t.id === taskToDelete.id);
 
-      // 2. cloned the array
-        // 3. remove the task from the array
-      let cloned = [
-                ...this.state.tasks.slice(0, index),
-                ...this.state.tasks.slice(index+1)
-    
-            ];
-      // 4. set the cloned array back into the state
-      this.setState({
-          'tasks':cloned
-      })
-  }
+    // 2. cloned the array
+    // 3. remove the task from the array
+    let cloned = [
+      ...this.state.tasks.slice(0, index),
+      ...this.state.tasks.slice(index + 1)
+    ];
+    // 4. set the cloned array back into the state
+    this.setState({
+      tasks: cloned
+    });
+  };
 
-  updateCheckbox(task) {
+  updateTaskCheckbox(task) {
     // 1. clone the object that you are changing
     let clonedTask = { ...task };
 
@@ -149,6 +193,19 @@ export default class TodoList extends React.Component {
     });
   };
 
+  updateFormField = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
+
+  updateCheckbox = event => {
+      console.log(event.target.value);
+      this.setState({
+          [event.target.name] : event.target.checked
+      })
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -165,6 +222,42 @@ export default class TodoList extends React.Component {
         <button onClick={this.addTask}>Add Task</button>
         <h1>Task List</h1>
         {this.renderTaskList()}
+        <div
+          id="popup"
+          style={{
+            display: this.state.editingTask ? "block" : "none"
+          }}
+        >
+          <div>
+            <label>Title:</label>
+            <input
+              type="text"
+              name="editedTaskTitle"
+              onChange={this.updateFormField}
+              value={this.state.editedTaskTitle}
+            />
+          </div>
+          <div>
+            <label>Done:</label>
+            <input
+              type="checkbox"
+              name="editedTaskDone"
+              onChange={this.updateCheckbox}
+              checked={this.state.editedTaskDone}
+            />
+          </div>
+
+          <button
+            onClick={() => {
+              this.setState({
+                editingTask: false
+              });
+              this.updateTask();
+            }}
+          >
+            OK
+          </button>
+        </div>
       </React.Fragment>
     );
   }
