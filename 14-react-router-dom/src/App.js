@@ -9,6 +9,7 @@ import Home from "./pages/Home"
 import About from "./pages/About"
 import ContactUs from "./pages/ContactUs"
 import ThankYou from "./pages/ThankYou";
+import Posts from './pages/Posts'
 
 function App() {
   return (
@@ -30,6 +31,11 @@ function App() {
               Contact Us
             </Link>
           </li>
+            <li className="nav-item">
+            <Link className="nav-link" to="/posts">
+              Posts
+            </Link>
+          </li>
         </ul>
       </nav>
       <div className="container-fluid">
@@ -47,6 +53,10 @@ function App() {
           <Route exact path = "/thank-you">
               <ThankYou/>
           </Route>
+          <Route exact path = "/posts">
+              <Posts/>
+          </Route>
+
 
           
       </Switch>
