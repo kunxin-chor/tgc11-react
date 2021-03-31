@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import ProductContext from "./ProductContext";
+import {Link} from 'react-router-dom'
 
 export default function ProductTable() {
   const context = useContext(ProductContext);
@@ -19,7 +20,11 @@ export default function ProductTable() {
               <React.Fragment>
                 <tr>
                   <td>{p.id}</td>
-                  <td>{p.product_name}</td>
+                  <td>
+                      <Link to={"product_details/"+p.id}>
+                      {p.product_name}
+                      </Link>
+                      </td>
                   <td>{p.cost}</td>
                 </tr>
               </React.Fragment>

@@ -33,6 +33,9 @@ export default class ProductProvider extends React.Component {
         this.setState({
           products: clone
         });
+      },
+      findProduct :(productId) => {
+          return this.state.products.find(p => p.id === parseInt(productId));
       }
     };
     return (
